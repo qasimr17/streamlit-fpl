@@ -20,6 +20,16 @@ def highlight(row):
 	else:
 		return ['background-color: white'] * 6
 
+def highlight_ranks(col):
+
+	""" Applies appropriate highlights based on rank changes. """
+	if col.entry_rank < col.entry_last_rank:
+		return ['background-color: green'] 
+	elif col.entry_rank > col.entry_last_rank:
+		return ['background-color: red'] 
+	else:
+		return ['background-color: gray']
+
 def app():
 
 	# Get basic information and tables:
@@ -39,7 +49,8 @@ def app():
 		header.write("Here is a table depicting your performance in all of your leagues:")
 		# create dataframe containing manager's rankings in all of the leagues
 		classic_leagues = pd.DataFrame(manager_info['leagues']['classic'])[['name', 'entry_rank', 'entry_last_rank']]
-		header.dataframe(classic_leagues)
+		header.dataframe(classic_leagues.style.apply(highlight_ranks, axis=0))
+		# header.dataframe(classic_leagues)
 		header.write("\n")
 
 	# Create table showing performance in each gameweek played so far
