@@ -35,7 +35,7 @@ def app():
 
 		manager_info = my_performance_utils.manager_info(fpl_id)
 		header.write(f"Welcome, {manager_info['player_first_name']} {manager_info['player_last_name']}.")
-		header.write(f"You are currently ranked {manager_info['summary_overall_rank']} in the world.")
+		header.write(f"You are currently ranked {manager_info['summary_overall_rank']:,} in the world.")
 		header.write("Here is a table depicting your performance in all of your leagues:")
 		# create dataframe containing manager's rankings in all of the leagues
 		classic_leagues = pd.DataFrame(manager_info['leagues']['classic'])[['name', 'entry_rank', 'entry_last_rank']]
