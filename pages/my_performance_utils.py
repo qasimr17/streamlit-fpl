@@ -94,7 +94,7 @@ def get_player_points(player_id, gameweek):
 
 	""" Given a particular gameweek and a player_id, returns the points gained by that player in the
 	specified gameweek. """
-	
+
 	url = f"https://fantasy.premierleague.com/api/element-summary/{player_id}/"
 	response = ''
 	
@@ -149,16 +149,17 @@ def combined_df(gw_data, current_gw, lookup_table):
 	""" Returns a data frame containing the information on the highest scoring players of a manager's team for each gameweek. """
 
 	gw_top_players = list()
-	best_players = pd.DataFrame(gw_top_players)
-	best_players['top_player'] = [lookup_table.loc[lookup_table.id == id, "web_name"].item() for id in best_players.player_id]
-	best_players = best_players[['top_player', 'score']]
+
 	for i in range(current_gw):
 		gw_scores = list()
 		for element in gw_data[i+1]['picks']:
 			gw_scores.append(dict(player_id = element['element'], score = get_player_points(element['element'], i)))
 		highest_score = max(gw_scores, key = lambda x: x['score'])
 		gw_top_players.append(highest_score)
-
+		
+	best_players = pd.DataFrame(gw_top_players)
+	best_players['top_player'] = [lookup_table.loc[lookup_table.id == id, "web_name"].item() for id in best_players.player_id]
+	best_players = best_players[['top_player', 'score']]
 	return best_players
 
 
