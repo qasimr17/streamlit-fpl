@@ -19,7 +19,7 @@ def highlight(row):
 		return ['background-color: orange'] * 6
 	else:
 		return ['background-color: white'] * 6
-
+ 
 def app():
 
 	# Get basic information and tables:
@@ -36,7 +36,9 @@ def app():
 		manager_info = my_performance_utils.manager_info(fpl_id)
 		header.write(f"Welcome, {manager_info['player_first_name']} {manager_info['player_last_name']}.")
 		header.write(f"You are currently ranked {manager_info['summary_overall_rank']:,} in the world.")
-		header.write("Here is a table depicting your performance in all of your leagues:")
+
+		header.write("Here is a table depicting your performance in all of your leagues, with colours depicting how your rank changed:")
+
 		# create dataframe containing manager's rankings in all of the leagues
 		classic_leagues = pd.DataFrame(manager_info['leagues']['classic'])[['name', 'entry_rank', 'entry_last_rank']]
 
@@ -59,7 +61,7 @@ def app():
 			x.loc[mask_same, ['entry_rank', 'entry_last_rank']] = 'background-color: gray'
 
 			return x 
-		
+    
 		header.dataframe(classic_leagues.style.apply(highlight_ranks, axis=None))
 		header.write("\n")
 
