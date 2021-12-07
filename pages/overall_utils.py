@@ -8,7 +8,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-@st.cache
+#@st.cache
 def get_base_data():
 
 	""" Returns data from base fpl api. """
